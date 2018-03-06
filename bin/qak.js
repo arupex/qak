@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+'use strict';
 let args = process.argv
     .filter(e => e.indexOf('=') !== -1)
     .reduce((acc, value) => {
