@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
-let f = require('../lib/findProjects');
+let projects = require('../lib/findProjects');
 
-console.log('', JSON.stringify(f, null, 3));
+if(process.argv.length === 2) {
+
+    let table = require('../lib/table')(projects);
+
+    console.log(table);
+}
