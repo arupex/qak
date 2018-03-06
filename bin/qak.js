@@ -14,7 +14,8 @@ let table = require('table').table;
 let spawner = require('child_process').spawnSync;
 
 function spawn(cmd, cwd){
-    spawner('npm', ['run', cmd], {
+    // call command and pass args via both args and env
+    spawner('npm', ['run', cmd].concat(Object.keys(args).map(e=> `--${e}=${args[e]}`) ), {
         cwd : cwd,
         env : Object.assign({}, process.env, args),
         stdio : 'inherit'
