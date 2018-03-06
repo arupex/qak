@@ -9,29 +9,37 @@ A CLI for nested Projects
 
 
 ### Instalation
+
     npm i -g qak
     
 ### Usage (get commands)
+
     qak
     
 ### Usage if unique command (if not unique qak will give you a table of ambiguity)
+
     qak uniqueCommand
     
 ### Usage if you want project scripts
+
     qak project
     
 ### Usage if you want to run a command in a specific project when that command is used in multiple projects
+
     qak project command
     or
     qak command project
     
 ### passing args thru qak
+
     qak command project --remoteUrl=localhost
+    
 Qak will
  - set env var remoteUrl = 'localhost';
  - set the args on the command call to match as well
  
  ### qak ambiquity (if there is any it will output a table to stdout)
+ 
         $> qak postinstall
          ╔══════════════════╤═════════════╤═════════════════════════════════════════════════════════╗
          ║ Project          │ Command     │ Script                                                  ║
@@ -42,6 +50,7 @@ Qak will
          ╚══════════════════╧═════════════╧═════════════════════════════════════════════════════════╝
      
  ### if you give it a project name but no command qak will tell you the availible commands
+ 
          $> qak api
          ╔═════════╤═════════╤══════════════════════════════════════════════════╗
          ║ Project │ Command │ Script                                           ║
@@ -55,6 +64,7 @@ Qak will
          ╚═════════╧═════════╧══════════════════════════════════════════════════╝
  
  ### and if you just do qak you'll get it all
+ 
           $> qak
           ╔══════════════════╤═══════════════╤═════════════════════════════════════════════════╗
           ║ Project          │ Command       │ Script                                          ║
@@ -89,6 +99,7 @@ Qak will
           
       
   ### Partial match - this module uses digital-search which uses a digital trie to search possible choices
+  
        $> qak ap
        ╔═════════╤═════════╤══════════════════════════════════════════════════╗
        ║ Project │ Command │ Script                                           ║
