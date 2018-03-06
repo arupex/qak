@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/arupex/qak.git"
   },
-  "bin" : {
+  "bin": {
     "qak": "bin/qak.js"
   },
   "keywords": [
@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/arupex/qak/issues"
   },
-  "homepage": "https://github.com/arupex/qak#readme"
+  "homepage": "https://github.com/arupex/qak#readme",
+  "dependencies": {
+    "table": "^4.0.3"
+  }
 }
