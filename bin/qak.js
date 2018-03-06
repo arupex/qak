@@ -68,7 +68,10 @@ else {
         let maxP = arrayOfArrays.reduce((acc, v) => Math.max(acc, v[0].length), 0);
         let maxC = arrayOfArrays.reduce((acc, v) => Math.max(acc, v[1].length), 0);
 
-        let maxEach = process.stdout.columns - maxP - maxC - 12;
+        let maxEach = process.stdout.columns - maxP - maxC - 15;
+        if (maxEach < 5) {
+            maxEach = 5;
+        }
         console.log(table(arrayOfArrays, {
             columns: {
                 0: {
