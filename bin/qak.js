@@ -52,9 +52,6 @@ let searcher = new DigitalSearch(searchables, {
 
 const mapAttack = require('map-attack');
 
-
-console.log('searching...', qString);
-
 let search = searcher.search(qString);
 
 let convertSearchResultsToTable = function (search) {
@@ -71,7 +68,6 @@ let convertSearchResultsToTable = function (search) {
         });
     });
 
-    console.log('multiple results', rProjects);
     let table = projectTable(rProjects);
     console.log(table);
 };
