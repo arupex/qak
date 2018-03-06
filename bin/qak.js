@@ -59,11 +59,10 @@ else {
         spawn(script[0].scriptName, project.cwd);
     }
     else if(script && script.length > 1) {
-        let arrayOfArrays = ['Project', 'Command', 'Script'];
+        let arrayOfArrays = [['Project', 'Command', 'Script']];
         script.forEach(e => {
             arrayOfArrays.push([e.project, e.scriptName, e.script]);
         });
-        console.log('debug', arrayOfArrays);
         console.log(table(arrayOfArrays));
     }
     else {
