@@ -63,7 +63,7 @@ else {
         script.forEach(e => {
             arrayOfArrays.push([e.project, e.scriptName, e.script]);
         });
-        console.log(table(script));
+        console.log(table(arrayOfArrays));
     }
     else {
 
