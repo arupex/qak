@@ -48,7 +48,7 @@ let project = projectMapping[process.argv.find(e => projectMapping[e])];
 let script = scriptMappings[process.argv.find(e => scriptMappings[e])];
 
 if (project && script) {
-    spawn(project.scripts[script.scriptName], project.cwd);
+    spawn(script[0].scriptName, project.cwd);
 }
 else {
     if (project && !script) {
