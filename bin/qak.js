@@ -16,7 +16,8 @@ let spawner = require('child_process').spawnSync;
 function spawn(cmd, cwd){
     spawner('npm', ['run', cmd], {
         cwd : cwd,
-        env : Object.assign({}, process.env, args)
+        env : Object.assign({}, process.env, args),
+        stdio : 'inherit'
     });
 }
 
