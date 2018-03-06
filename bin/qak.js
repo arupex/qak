@@ -57,14 +57,7 @@ console.log('searching...', qString);
 
 let search = searcher.search(qString);
 
-if (search.length === 0) {
-    let table = projectTable(projects);
-    console.log(table);
-}
-else if (search.length === 1) {
-    spawn(search[0].scriptName, search[0].cwd);
-}
-else if (search.length > 1) {
+let convertSearchResultsToTable = function (search) {
     let set = mapAttack(mapAttack(search, 'projectScript', false), 'projectScript', false);
     let rProjects = [];
 
@@ -81,4 +74,16 @@ else if (search.length > 1) {
     console.log('multiple results', rProjects);
     let table = projectTable(rProjects);
     console.log(table);
+};
+
+if (search.length === 0) {
+    let table = projectTable(projects);
+    console.log(table);
+}
+else if (search.length === 1) {
+    convertSearchResultsToTable(search);
+    spawn(search[0].scriptName, search[0].cwd);
+}
+else if (search.length > 1) {
+    convertSearchResultsToTable(search);
 }
