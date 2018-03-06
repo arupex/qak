@@ -1,0 +1,37 @@
+{
+  "name": "qak",
+  "version": "0.0.1",
+  "description": "A CLI tool for Nested projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arupex/qak.git"
+  },
+  "bin": {
+    "qak": "bin/qak.js"
+  },
+  "keywords": [
+    "qak",
+    "cli",
+    "tool",
+    "npm",
+    "nested",
+    "projects",
+    "recursive",
+    "deep"
+  ],
+  "author": "dirwin517",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/arupex/qak/issues"
+  },
+  "homepage": "https://github.com/arupex/qak#readme",
+  "dependencies": {
+    "digital-search": "0.0.5",
+    "map-attack": "^1.0.5",
+    "table": "^4.0.3"
+  }
+}
