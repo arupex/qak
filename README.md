@@ -30,3 +30,59 @@ A CLI for nested Projects
 Qak will
  - set env var remoteUrl = 'localhost';
  - set the args on the command call to match as well
+ 
+ ### qak ambiquity (if there is any it will output a table to stdout)
+    $> qak postinstall
+     ╔══════════════════╤═════════════╤═════════════════════════════════════════════════════════╗
+     ║ Project          │ Command     │ Script                                                  ║
+     ╟──────────────────┼─────────────┼─────────────────────────────────────────────────────────╢
+     ║ integration-test │ postinstall │ ./scripts/download_wiremock.sh;webdriver-manager update ║
+     ╟──────────────────┼─────────────┼─────────────────────────────────────────────────────────╢
+     ║ system-test      │ postinstall │ webdriver-manager update                                ║
+     ╚══════════════════╧═════════════╧═════════════════════════════════════════════════════════╝
+     
+ ### if you give it a project name but no command qak will tell you the availible commands
+     $> qak api
+     ╔═════════╤═════════╤═════════════════════════════════════════════════════╗
+     ║ Project │ Command │ Script                                              ║
+     ╟─────────┼─────────┼─────────────────────────────────────────────────────╢
+     ║ api     │ serve   │ npm run swagger; nodemon src/server.js              ║
+     ╟─────────┼─────────┼─────────────────────────────────────────────────────╢
+     ║ api     │ swagger │ node tasks/buildSwaggerDef.js                       ║
+     ║         │         │ ../client/doc/swagger.json swagger.yml localdev     ║
+     ╟─────────┼─────────┼─────────────────────────────────────────────────────╢
+     ║ api     │ test    │ ./../node_modules/.bin/cucumber-js --tags '@wip'    ║
+     ╚═════════╧═════════╧═════════════════════════════════════════════════════╝
+ 
+ ### and if you just do qak you'll get it all
+      $> qak
+      ╔══════════════════╤═══════════════╤═══════════════════════════════════════════════════════╗
+      ║ Project          │ Command       │ Script                                                ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ admin            │ test          │ npm run test-service;npm run test-ui                  ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ admin            │ test-ui       │ cd client;npm test;npm run e2e;cd ..                  ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ api              │ serve         │ npm run swagger; nodemon src/server.js                ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ api              │ swagger       │ node tasks/buildSwaggerDef.js                         ║
+      ║                  │               │ ../client/doc/swagger.json swagger.yml localdev       ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ ng            │ ng                                                    ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ start         │ webpack-dev-server --port=4200                        ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ test          │ karma start ./karma.conf.js                           ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ e2e           │ chimp                                                 ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ lint          │ ng lint                                               ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ bower-install │ bower install && ./scripts/fix_bower_paths.sh         ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ client           │ i18n          │ node ./scripts/aggregatei18n.js                       ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ integration-test │ postinstall   │ ./scripts/wiremock.sh;webdriver-manager update        ║
+      ╟──────────────────┼───────────────┼───────────────────────────────────────────────────────╢
+      ║ system-test      │ postinstall   │ webdriver-manager update                              ║
+      ╚══════════════════╧═══════════════╧═══════════════════════════════════════════════════════╝
