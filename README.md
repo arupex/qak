@@ -28,5 +28,5 @@ A CLI for nested Projects
 ### passing args thru qak
     qak command project --remoteUrl=localhost
 Qak will
-process.env.remoteUrl = 'localhost';
-and also set the args on the command call to match as well
+ - set env var remoteUrl = 'localhost';
+ - set the args on the command call to match as well
