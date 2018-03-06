@@ -30,6 +30,8 @@
   },
   "homepage": "https://github.com/arupex/qak#readme",
   "dependencies": {
+    "digital-search": "0.0.5",
+    "map-attack": "^1.0.5",
     "table": "^4.0.3"
   }
 }

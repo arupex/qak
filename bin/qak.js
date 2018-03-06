@@ -10,8 +10,12 @@ let args = process.argv
 
 let projects = require('../lib/findProjects');
 let projectTable = require('../lib/projectTable');
-let table = require('table').table;
+
 let spawner = require('child_process').spawnSync;
+
+let qString = process.argv.slice(2).filter(e => !(/-\w+/g.test(e))).join(' ');
+
+let DigitalSearch = require('digital-search');
 
 function spawn(cmd, cwd) {
     // call command and pass args via both args and env
@@ -22,75 +26,59 @@ function spawn(cmd, cwd) {
     });
 }
 
-let projectMapping = projects.reduce((acc, v) => {
-    acc[v.name] = v;
-    return acc;
-}, {});
-
-let scriptMappings = projects.reduce((acc, v) => {
-
-    Object.keys(v.scripts).forEach(scriptName => {
-        if (!acc[scriptName]) {
-            acc[scriptName] = [];
-        }
-
-        acc[scriptName].push({
-            project: v.name,
+let searchables = projects.reduce((acc, project) => {
+    let scripts = Object.keys(project.scripts);
+    scripts.forEach(scriptName => {
+        acc.push({
+            name: project.name,
+            projectScript: project.name + ' ' + scriptName,
+            project: project.name,
+            cwd: project.cwd,
             scriptName: scriptName,
-            script: v.scripts[scriptName]
+            scripts: project.scripts
         });
     });
     return acc;
-}, {});
+}, []);
 
 
-let project = projectMapping[process.argv.find(e => projectMapping[e])];
-let script = scriptMappings[process.argv.find(e => scriptMappings[e])];
+let searcher = new DigitalSearch(searchables, {
+    searchable: 'projectScript',
+    indexable: 'projectScript',
+    partials: true,
+    caseSensative: false,
+    minWordLength: 1
+});
 
-if (project && script) {
-    spawn(script[0].scriptName, project.cwd);
+const mapAttack = require('map-attack');
+
+
+console.log('searching...', qString);
+
+let search = searcher.search(qString);
+
+if (search.length === 0) {
+    let table = projectTable(projects);
+    console.log(table);
 }
-else {
-    if (project && !script) {
-        let table = projectTable([project]);
-        console.log(table);
-    }
-    else if (script && script.length === 1) {
-        let project = projectMapping[script[0].project];
-        spawn(script[0].scriptName, project.cwd);
-    }
-    else if (script && script.length > 1) {
-        let arrayOfArrays = [['Project', 'Command', 'Script']];
-        script.forEach(e => {
-            arrayOfArrays.push([e.project, e.scriptName, e.script]);
-        });
+else if (search.length === 1) {
+    spawn(search[0].scriptName, search[0].cwd);
+}
+else if (search.length > 1) {
+    let set = mapAttack(mapAttack(search, 'projectScript', false), 'projectScript', false);
+    let rProjects = [];
 
-        let maxP = arrayOfArrays.reduce((acc, v) => Math.max(acc, v[0].length), 0);
-        let maxC = arrayOfArrays.reduce((acc, v) => Math.max(acc, v[1].length), 0);
-
-        let maxEach = process.stdout.columns - maxP - maxC - 15;
-        if (maxEach < 5) {
-            maxEach = 5;
-        }
-        console.log(table(arrayOfArrays, {
-            columns: {
-                0: {
-                    wrapWord: true
-                },
-                1: {
-                    wrapWord: true
-                },
-                2: {
-                    width: maxEach,
-                    wrapWord: true
-                }
+    set.forEach(e => {
+        rProjects.push({
+            name: e.name,
+            cwd: e.cwd,
+            scripts: {
+                [e.scriptName]: e.scripts[e.scriptName].replace(/\n/g, '').trim()
             }
-        }));
-    }
-    else {
+        });
+    });
 
-        let table = projectTable(projects);
-        console.log(table);
-
-    }
+    console.log('multiple results', rProjects);
+    let table = projectTable(rProjects);
+    console.log(table);
 }
